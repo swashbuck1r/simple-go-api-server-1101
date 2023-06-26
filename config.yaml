@@ -1,0 +1,9 @@
+# Configuration file
+
+port: 8080
+
+InitialToDos:
+  - Id:    "daily.garbage"
+    Title: "Take out the garbage"
+  - Id:    "daily.milk"
+    Title: "Shop for milk"
