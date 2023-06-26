@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
+	"github.com/swashbuck1r/simple-go-api-server/config"
 	"github.com/swashbuck1r/simple-go-api-server/server"
 )
 
@@ -13,7 +14,7 @@ func init() {
 		Short: "Start server",
 		Long:  `Start the api-server`,
 		Run: func(cmd *cobra.Command, args []string) {
-			var config server.Configuration
+			var config config.Configuration
 			viper.Unmarshal(&config)
 			server.Start(&config)
 		},

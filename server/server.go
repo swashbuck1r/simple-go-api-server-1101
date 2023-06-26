@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 
+	"github.com/swashbuck1r/simple-go-api-server/config"
 	"github.com/swashbuck1r/simple-go-api-server/server/middleware"
 )
 
@@ -21,7 +22,7 @@ func init() {
 	gin.SetMode(gin.ReleaseMode)
 }
 
-func Start(c *Configuration) {
+func Start(c *config.Configuration) {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 
@@ -55,10 +56,10 @@ func setupRouter(ctx context.Context) *gin.Engine {
 	ginEngine.Use(gin.Recovery())
 	ginEngine.Use(middleware.HTTPLogger())
 
-	var config Configuration
-	viper.Unmarshal(&config)
+	initialTodos := []Todo{}
+	viper.UnmarshalKey("InitialToDos", &initialTodos)
 
-	todoList := newTodoList(config.InitialToDos)
+	todoList := newTodoList(initialTodos)
 	ginEngine.GET("/todos", todoList.getTodos)
 	ginEngine.POST("/todos", todoList.createTodo)
 	ginEngine.PUT("/todos/:id", todoList.updateTodoStatus)
