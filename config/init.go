@@ -13,6 +13,7 @@ const (
 	APP_ENV_PREFIX = ""
 )
 
+// Initializes the viper configuration based on a config file and env mode
 func InitConfig(cfgFile *string, envMode *string) func() {
 	return func() {
 		log.Printf("running in env mode: %s\n", *envMode)

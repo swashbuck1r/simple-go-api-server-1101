@@ -25,7 +25,7 @@ func newTodoList(initialTodos []Todo) *TodoList {
 }
 
 func (todoList *TodoList) getTodos(c *gin.Context) {
-	c.JSON(http.StatusOK, todoList.Todos)
+	c.IndentedJSON(http.StatusOK, todoList.Todos)
 }
 
 func (todoList *TodoList) createTodo(c *gin.Context) {
@@ -35,7 +35,7 @@ func (todoList *TodoList) createTodo(c *gin.Context) {
 		return
 	}
 	todoList.Todos = append(todoList.Todos, newTodo)
-	c.IndentedJSON(http.StatusCreated, newTodo)
+	c.JSON(http.StatusCreated, newTodo)
 }
 
 func (todoList *TodoList) updateTodoStatus(c *gin.Context) {
