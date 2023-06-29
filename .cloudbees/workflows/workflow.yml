@@ -30,7 +30,7 @@ jobs:
         shell: sh
         env:
           DOCKER_USERNAME: swashbuck1r
-          DOCKER_PASSWORD: ${{ secrets.spike-docker }}
+          DOCKER_PASSWORD: ${{ secrets.demo-docker-token }}
         run: |
           AUTH=$(echo -n "${DOCKER_USERNAME}:${DOCKER_PASSWORD}" | base64)
           cat << EOF > "$CLOUDBEES_OUTPUTS/dockerconfigjson"
