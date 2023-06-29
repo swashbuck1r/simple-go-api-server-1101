@@ -1,0 +1,18 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: Spike automation
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    steps:
+      - name: Build code
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        timeout-minutes: 0.5
+        run: |
+          echo "Hello world2"
