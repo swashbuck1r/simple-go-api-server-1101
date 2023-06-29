@@ -17,7 +17,7 @@ jobs:
         shell: sh
         timeout-minutes: 0.5
         run: |
-          echo "Hello world6"
+          echo "Hello world7"
           ls
           find . 
       - name: loop for 65 secs
