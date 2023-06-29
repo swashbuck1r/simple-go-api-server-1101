@@ -22,7 +22,6 @@ jobs:
           export GOPATH=$HOME/go
           export PATH=$PATH:$GOPATH/bin
           go version
-          cd ./simple-go-api-server
           CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o build/api-server .
 
       - id: docker-login-step
@@ -49,5 +48,5 @@ jobs:
           dockerconfigjson: ${{ steps.docker-login-step.outputs.dockerconfigjson }}
           destination: index.docker.io/swashbuck1r/simple-go-api-server:1.0.2
           labels: maintaner=swashbuck1r
-          context: ${{ cloudbees.workspace }}/simple-go-api-server
+          context: ${{ cloudbees.workspace }}
           build-args: BUILDKIT_CONTEXT_KEEP_GIT_DIR=1,BUILDKIT_INLINE_CACHE=1,BUILD_ARG_SPACES='i am a space'
