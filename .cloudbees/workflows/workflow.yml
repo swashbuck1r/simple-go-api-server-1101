@@ -10,8 +10,6 @@ on:
 jobs:
   build:
     steps:
-      - name: clone the workflow repo
-        uses: cloudbees-io/checkout@v1.0
       - name: Build code
         uses: docker://golang:1.20.3-alpine3.17
         shell: sh
