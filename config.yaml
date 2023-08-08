@@ -7,3 +7,5 @@ InitialToDos:
     Title: "Take out the garbage"
   - Id:    "daily.milk"
     Title: "Shop for milk"
+  - Id:    "daily.bread"
+    Title: "Shop for bread"

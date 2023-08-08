@@ -60,6 +60,7 @@ func setupRouter(ctx context.Context) *gin.Engine {
 	viper.UnmarshalKey("InitialToDos", &initialTodos)
 
 	todoList := newTodoList(initialTodos)
+	ginEngine.GET("/", todoList.getTodos)
 	ginEngine.GET("/todos", todoList.getTodos)
 	ginEngine.POST("/todos", todoList.createTodo)
 	ginEngine.PUT("/todos/:id", todoList.updateTodoStatus)
