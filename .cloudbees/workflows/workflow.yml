@@ -47,7 +47,7 @@ jobs:
 
     - uses: docker://mikefarah/yq:4-githubaction
       env:
-        CHART_REPO: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server
+        CHART_REPO: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image
         CHART_TAG: latest
       run: |
         yq -i '.image.repository = strenv(CHART_REPO) | .image.tag = strenv(CHART_TAG)' charts/myapp/values.yaml
