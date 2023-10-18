@@ -9,3 +9,5 @@ InitialToDos:
     Title: "Shop for milk"
   - Id:    "daily.bread"
     Title: "Shop for bread"
+  - Id:    "say.hello"
+    Title: "Say hello"
