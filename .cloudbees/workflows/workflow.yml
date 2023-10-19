@@ -59,7 +59,7 @@ jobs:
         chart: ./charts/myapp
         destination: ./packaged-charts
         version: "0.0.1"
-        values:
+        values: |
           image:
             repository:  ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image
             tag: latest
