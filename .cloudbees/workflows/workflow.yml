@@ -45,12 +45,12 @@ jobs:
       with:
         destination: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image:latest
 
-    - uses: docker://mikefarah/yq:4-githubaction
-      env:
-        CHART_REPO: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image
-        CHART_TAG: latest
-      run: |
-        yq -i '.image.repository = strenv(CHART_REPO) | .image.tag = strenv(CHART_TAG)' charts/myapp/values.yaml
+    # - uses: docker://mikefarah/yq:4-githubaction
+    #   env:
+    #     CHART_REPO: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image
+    #     CHART_TAG: latest
+    #   run: |
+    #     yq -i '.image.repository = strenv(CHART_REPO) | .image.tag = strenv(CHART_TAG)' charts/myapp/values.yaml
 
     - id: helmpkg
       name: Package Helm chart
@@ -59,6 +59,10 @@ jobs:
         chart: ./charts/myapp
         destination: ./packaged-charts
         version: "0.0.1"
+        values:
+          image:
+            repository:  ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image
+            tag: latest
 
     - name: Publish Helm chart
       uses: cloudbees-io/helm-push
