@@ -6,8 +6,7 @@ on:
   push:
     branches:
       - "main"
-env:
-  APP_NAME: simple-go-api-server
+      
 jobs:
   build:
     steps:
@@ -41,7 +40,7 @@ jobs:
 
       - uses: cloudbees-io/kaniko@v1
         with:
-          destination: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}-image:latest
+          destination: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image:latest
 
       - id: helmpkg
         name: Package Helm chart
@@ -52,7 +51,7 @@ jobs:
           version: "0.0.1"
           values: |
             image:
-              repository:  ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}-image
+              repository:  ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image
               tag: latest
 
       - name: Publish Helm chart
@@ -62,7 +61,7 @@ jobs:
           remote: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com
 
     outputs:
-      chart-location: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}
+      chart-location: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server
       chart-version: "0.0.1"
 
   # scan:
@@ -101,4 +100,4 @@ jobs:
           chart-location: ${{ needs.build.outputs.chart-location }}
           version: ${{ needs.build.outputs.chart-version }}
           release-name: app-chart
-          namespace: ${{ env.APP_NAME }}
+          namespace: simple-go-api-server
