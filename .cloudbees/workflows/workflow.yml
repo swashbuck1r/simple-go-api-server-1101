@@ -6,6 +6,10 @@ on:
   push:
     branches:
       - "main"
+env:
+  APP_NAME: simple-go-api-server
+  AWS_REGION: us-east-1
+
 jobs:
   build:
     steps:
@@ -29,7 +33,7 @@ jobs:
       - uses: cloudbees-io/configure-aws-credentials@v0
         id: aws-login
         with:
-          aws-region: us-east-1
+          aws-region: ${{ env.AWS_REGION }}
           aws-access-key-id: ${{ vars.aws_access_key_id }}
           aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
           role-to-assume: service-ecr-role
@@ -39,7 +43,7 @@ jobs:
 
       - uses: cloudbees-io/kaniko@v1
         with:
-          destination: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image:latest
+          destination: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.APP_NAME }}-image:latest
 
       - id: helmpkg
         name: Package Helm chart
@@ -50,17 +54,17 @@ jobs:
           version: "0.0.1"
           values: |
             image:
-              repository:  ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image
+              repository:  ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.APP_NAME }}-image
               tag: latest
 
       - name: Publish Helm chart
         uses: cloudbees-io/helm-push
         with:
           chart: ${{ steps.helmpkg.outputs.chart }}
-          remote: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com
+          remote: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
 
     outputs:
-      chart-location: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server
+      chart-location: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.APP_NAME }}
       chart-version: "0.0.1"
 
   # scan:
@@ -80,7 +84,7 @@ jobs:
     steps:
       - uses: cloudbees-io/configure-aws-credentials@v0
         with:
-          aws-region: us-east-1
+          aws-region: ${{ env.AWS_REGION }}
           aws-access-key-id: ${{ vars.aws_access_key_id }}
           aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
           role-to-assume: service-eks-role
@@ -99,4 +103,4 @@ jobs:
           chart-location: ${{ needs.build.outputs.chart-location }}
           version: ${{ needs.build.outputs.chart-version }}
           release-name: app-chart
-          namespace: simple-go-api-server
+          namespace: ${{ env.APP_NAME }}
