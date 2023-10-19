@@ -41,7 +41,7 @@ jobs:
 
     - uses: cloudbees-io/configure-ecr-credentials@v0
 
-    - uses: cloudbees-io/kaniko@implicit-dockerconfig
+    - uses: cloudbees-io/kaniko@v1
       with:
         destination: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server-image:latest
 
