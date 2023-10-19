@@ -62,7 +62,7 @@ jobs:
           remote: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com
 
     outputs:
-      chart-location: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/simple-go-api-server
+      chart-location: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}
       chart-version: "0.0.1"
 
   # scan:
