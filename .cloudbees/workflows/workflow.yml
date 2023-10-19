@@ -100,7 +100,7 @@ jobs:
 
     - id: install-chart
       name: Install helm chart
-      uses: cloudbees-io/cb-internal-extension-service/deploy
+      uses: cloudbees-io/helm-install
       with:
         chart-location: ${{ needs.build.outputs.chart-location }}
         version: ${{ needs.build.outputs.chart-version }}
