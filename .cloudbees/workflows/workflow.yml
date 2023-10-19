@@ -9,7 +9,7 @@ on:
 env:
   APP_NAME: simple-go-api-server
   AWS_REGION: us-east-1
-  VERSION: 0.0.1
+  VERSION: 0.0.2
 
 jobs:
   build:
