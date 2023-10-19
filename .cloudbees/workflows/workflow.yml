@@ -9,7 +9,7 @@ on:
 env:
   APP_NAME: simple-go-api-server
   AWS_REGION: us-east-1
-  VERSION: 0.0.2
+  VERSION: 0.0.1
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
         uses: docker://golang:1.20.3-alpine3.17
         shell: sh
         run: |
-          echo "hello world 9"
+          echo "hello world 8"
 
       - uses: cloudbees-io/checkout@v1
 
@@ -44,7 +44,7 @@ jobs:
 
       - uses: cloudbees-io/kaniko@v1
         with:
-          destination: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.APP_NAME }}-image:${{ env.VERSION }}
+          destination: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.APP_NAME }}-image:latest
 
       - id: helmpkg
         name: Package Helm chart
@@ -52,11 +52,11 @@ jobs:
         with:
           chart: ./charts/myapp
           destination: ./packaged-charts
-          version: ${{ env.VERSION }}
+          version: "${{ env.VERSION }}"
           values: |
             image:
               repository:  ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.APP_NAME }}-image
-              tag: ${{ env.VERSION }}
+              tag: latest
 
       - name: Publish Helm chart
         uses: cloudbees-io/helm-push
@@ -66,7 +66,7 @@ jobs:
 
     outputs:
       chart-location: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.APP_NAME }}
-      chart-version: ${{ env.VERSION }}
+      chart-version: "${{ env.VERSION }}"
 
   # scan:
   #   steps:
