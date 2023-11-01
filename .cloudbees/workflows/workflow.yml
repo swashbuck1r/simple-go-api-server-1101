@@ -5,7 +5,7 @@ name: build-n-deploy
 on:
   push:
     branches:
-      - "main"
+      - "*"
 jobs:
   build:
     steps:
