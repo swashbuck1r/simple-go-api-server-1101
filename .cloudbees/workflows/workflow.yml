@@ -76,17 +76,17 @@ jobs:
           role-to-assume: service-eks-role
           role-duration-seconds: "3600" # need to override default of 6h as our role has 1h max
 
-      - uses: cloudbees-io/configure-eks-credentials@v1
-        with:
-          name: arch-saas
+      # - uses: cloudbees-io/configure-eks-credentials@v1
+      #   with:
+      #     name: arch-saas
 
-      - uses: cloudbees-io/configure-ecr-credentials@v1
+      # - uses: cloudbees-io/configure-ecr-credentials@v1
 
-      - id: install-chart
-        name: Install helm chart
-        uses: cloudbees-io/helm-install
-        with:
-          chart-location: ${{ needs.build.outputs.chart-location }}
-          version: ${{ needs.build.outputs.chart-version }}
-          release-name: app-chart
-          namespace: simple-go-api-server
+      # - id: install-chart
+      #   name: Install helm chart
+      #   uses: cloudbees-io/helm-install
+      #   with:
+      #     chart-location: ${{ needs.build.outputs.chart-location }}
+      #     version: ${{ needs.build.outputs.chart-version }}
+      #     release-name: app-chart
+      #     namespace: simple-go-api-server
