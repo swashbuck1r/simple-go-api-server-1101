@@ -89,4 +89,4 @@ jobs:
           chart-location: ${{ needs.build.outputs.chart-location }}
           version: ${{ needs.build.outputs.chart-version }}
           release-name: app-chart
-          namespace: simple-go-api-server
+          namespace: simple-go-api-server-1101
